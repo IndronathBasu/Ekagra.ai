@@ -102,7 +102,7 @@ Supports multi-label classification, concept tagging, and difficulty adaptation.
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/<your-username>/adaptive-ai-revision.git
+git clone https://github.com/Indronathbasu/adaptive-ai-revision.git
 cd adaptive-ai-revision
 ```
 
