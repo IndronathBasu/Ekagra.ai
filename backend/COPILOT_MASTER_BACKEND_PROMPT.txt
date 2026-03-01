@@ -1,0 +1,286 @@
+You are a senior backend architect.
+Build a production-grade Adaptive Coding Practice Platform backend using:
+
+FastAPI
+PostgreSQL
+SQLAlchemy ORM
+Pydantic v2
+Clean layered architecture
+
+The backend must support:
+
+Structured adaptive problems
+Code execution engine
+Submission event processing
+Real-time skill state updates
+Super band progression
+ML microservice integration (future-ready)
+Dashboard analytics
+Clean separation of concerns
+
+Do NOT implement deployment, Docker sandboxing, or production hardening.
+
+ARCHITECTURE RULES (MANDATORY)
+
+Routers must be thin.
+All business logic must live in services.
+Models only define DB structure.
+Schemas only define request/response validation.
+Execution logic must be isolated.
+Submission must be immutable event log.
+Skill state must be aggregate table.
+ML integration must be non-blocking.
+No business logic inside routers.
+Code must be clean, readable, and modular.
+
+REQUIRED FOLDER STRUCTURE
+
+app/
+core/
+models/
+schemas/
+services/
+routers/
+main.py
+
+Keep everything properly layered.
+
+DOMAIN DESIGN
+Problem Model
+
+Fields:
+
+id
+domain
+subject
+topic
+cluster
+question_type
+cognitive_dimension
+difficulty_band
+super_band
+concepts (JSON list)
+skills_tested (JSON list)
+problem_statement
+example_input
+example_output
+estimated_time_seconds
+mastery_weight
+metadata (JSON)
+
+Test Case Model
+
+id
+problem_id
+input_data
+expected_output
+
+Test cases are internal. No public router.
+
+Submission Model
+
+Submission is immutable event log.
+
+Fields:
+
+id
+user_id
+problem_id
+code
+language
+status (passed / failed / runtime_error)
+score (float 0–1)
+execution_time_ms
+difficulty_band snapshot
+super_band snapshot
+cluster snapshot
+skill_delta (JSON)
+mastery_delta
+created_at
+
+Skill State Model
+
+Aggregate table.
+
+Fields:
+
+id
+user_id
+skill_name
+current_mastery
+super_band
+total_attempts
+total_success
+last_updated
+
+Skill state must update after every submission.
+
+EXECUTION ENGINE REQUIREMENTS
+
+Create execution_service.py with:
+
+load_test_cases(problem_id)
+run_code_with_timeout(code, input_data)
+compare_output(actual, expected)
+execute_code(...)
+
+Execution must:
+
+Handle runtime errors
+Enforce timeout
+Normalize whitespace
+Return:
+
+{
+"status": "passed" | "failed" | "runtime_error",
+"score": float,
+"execution_time_ms": int
+}
+
+No DB writes inside execution layer.
+
+SUBMISSION ENGINE
+
+In submission_service.py:
+
+Flow:
+
+Fetch problem.
+Execute code.
+Compute skill delta.
+Update skill_state.
+Save submission snapshot.
+Trigger ML event (non-blocking).
+Return adaptive response.
+
+Return format:
+
+{
+"submission_id": int,
+"status": "...",
+"score": float,
+"execution_time_ms": int,
+"mastery_delta": float,
+"updated_super_band": int
+}
+
+SKILL UPDATE LOGIC
+
+Implement skill_service.py.
+
+Rules:
+
+If submission passed:
+delta = problem.mastery_weight
+
+If failed:
+delta = - problem.mastery_weight * 0.2
+
+For each skill in problem.skills_tested:
+
+Increment total_attempts
+Increment total_success if passed
+Update current_mastery += delta
+
+If mastery crosses threshold:
+increase super_band
+
+Skill update must be atomic inside DB transaction.
+
+ML SERVICE LAYER
+
+Create ml_service.py.
+
+Function:
+
+trigger_ml_event(submission)
+
+Payload:
+
+{
+user_id,
+problem_id,
+score,
+cluster,
+difficulty_band,
+skills
+}
+
+Use async HTTP call.
+Do not block submission response.
+Log failures safely.
+
+DASHBOARD ENGINE
+
+dashboard_service.py must provide:
+
+user skill summary
+recent submissions
+super_band progress
+cluster breakdown
+mastery heatmap data
+
+Aggregate from skill_state + submissions.
+
+ROUTERS TO IMPLEMENT
+
+POST /submissions
+GET /submissions/user/{user_id}
+
+GET /dashboard/{user_id}
+
+GET /problems
+GET /problems/{id}
+
+Auth can remain minimal.
+
+CODING STYLE REQUIREMENTS
+
+Use dependency injection for DB session.
+Use typing hints everywhere.
+Use Pydantic v2 (from_attributes=True).
+No raw SQL.
+No duplicated logic.
+Keep services stateless.
+Write reusable helper functions.
+Keep code clean and readable.
+
+FRONTEND INTEGRATION REQUIREMENTS
+
+All endpoints must:
+
+Return structured JSON.
+Avoid internal DB field leaks.
+Use response_model in routers.
+Be consistent in naming.
+
+Frontend expects:
+
+score
+status
+mastery_delta
+updated_super_band
+skill summaries
+pagination support
+
+OUTPUT REQUIREMENT
+
+Generate full implementation for:
+
+submission_service
+skill_service
+execution_service
+ml_service
+dashboard_service
+
+necessary schema updates
+router wiring
+clean main.py integration
+
+Keep code modular and scalable.
+
+Do not implement deployment or Docker.
+
+Focus only on backend domain logic.
+
+END OF INSTRUCTION.

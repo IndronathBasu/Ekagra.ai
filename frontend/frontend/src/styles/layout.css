@@ -1,0 +1,77 @@
+/* Container utilities */
+.container {
+  @apply max-w-7xl mx-auto;
+}
+
+/* Card styles */
+.card {
+  @apply bg-slate-900 border border-slate-700 rounded-lg p-6 shadow-lg;
+}
+
+.card-header {
+  @apply bg-slate-800 px-6 py-4 border-b border-slate-700;
+}
+
+/* Button variants */
+.btn-primary {
+  @apply bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded transition-colors disabled:opacity-50 disabled:bg-slate-700;
+}
+
+.btn-secondary {
+  @apply bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2 px-4 rounded transition-colors disabled:opacity-50;
+}
+
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition-colors disabled:opacity-50 disabled:bg-slate-700;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors disabled:opacity-50 disabled:bg-slate-700;
+}
+
+/* Input styles */
+.input-base {
+  @apply bg-slate-800 border border-slate-700 rounded px-4 py-2 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors;
+}
+
+/* Badge styles */
+.badge-success {
+  @apply bg-green-900 text-green-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-danger {
+  @apply bg-red-900 text-red-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-warning {
+  @apply bg-yellow-900 text-yellow-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-in-out;
+}

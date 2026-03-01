@@ -1,0 +1,26 @@
+# Virtual Environment
+venv/
+.venv/
+
+# Model Checkpoints
+trained_model/
+checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Datasets
+dataset/
+data/
+
+# Python
+__pycache__/
+*.pyc
+
+# Env
+.env
+
+# IDE
+.vscode/
+.idea/
