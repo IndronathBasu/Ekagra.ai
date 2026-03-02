@@ -1,4 +1,4 @@
-# 🧠 Adaptive AI Learning Platform
+# 🧠 Ekagra.ai
 ### Complete Enterprise Architecture & System Design
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
