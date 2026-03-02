@@ -1,5 +1,5 @@
 # 🧠 Ekagra.ai
-### Complete Enterprise Architecture & System Design
+### Ekagra.ai, The Ai that adapts  you
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
